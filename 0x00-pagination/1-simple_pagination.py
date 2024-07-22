@@ -7,6 +7,7 @@ baby names.
 import csv
 from typing import List
 
+
 def index_range(page: int, page_size: int) -> tuple:
     """
     Calculate start and end index for a page of items.
@@ -43,13 +44,17 @@ class Server:
         :param page_size: Items per page, defaults to 10
         :return: List of rows for specified page
         """
-        assert isinstance(page, int) and page > 0, "page must be a positive int"
-        assert isinstance(page_size, int) and page_size > 0,\
+        assert isinstance(page, int) and page > 0, \
+            "page must be a positive int"
+        assert isinstance(page_size, int) and page_size > 0, \
             "page_size must be a positive int"
 
         start_index, end_index = index_range(page, page_size)
         dataset = self.dataset()
-        return dataset[start_index:end_index] if start_index < len(dataset) else []
+        if start_index < len(dataset):
+            return dataset[start_index:end_index]
+        else:
+            return []
 
 
 if __name__ == "__main__":
