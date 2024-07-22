@@ -8,6 +8,7 @@ import csv
 import math
 from typing import List, Dict
 
+
 def index_range(page: int, page_size: int) -> tuple:
     """
     Calculate start and end index for a page of items.
@@ -19,8 +20,9 @@ def index_range(page: int, page_size: int) -> tuple:
     end_index = start_index + page_size
     return (start_index, end_index)
 
+
 class Server:
-    """Server class to paginate a database of popular baby names with hypermedia."""
+    """to paginate a database of popular baby names with hypermedia."""
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
@@ -44,7 +46,10 @@ class Server:
 
         start_index, end_index = index_range(page, page_size)
         dataset = self.dataset()
-        return dataset[start_index:end_index] if start_index < len(dataset) else []
+        if start_index < len(dataset):
+            return dataset[start_index:end_index]
+        else:
+            return []
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, any]:
         """
@@ -64,6 +69,7 @@ class Server:
             "prev_page": prev_page,
             "total_pages": total_pages
         }
+
 
 if __name__ == "__main__":
     # Testing the Server's hypermedia pagination method
