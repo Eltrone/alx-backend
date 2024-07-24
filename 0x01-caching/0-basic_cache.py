@@ -2,7 +2,7 @@
 """
 Module for BasicCache that inherits from BaseCaching.
 """
-
+from base_caching import BaseCaching
 
 class BasicCache(BaseCaching):
     """
@@ -11,7 +11,7 @@ class BasicCache(BaseCaching):
 
     def put(self, key, item):
         """
-        Assign  item value for the key `key` in the cache_data dictionary.
+        Assign the item value for the key `key` in the cache_data dictionary.
         Does nothing if key or item is None.
         """
         if key is not None and item is not None:
