@@ -8,7 +8,7 @@ from base_caching import BaseCaching
 
 class MRUCache(BaseCaching):
     """
-    MRUCache implements caching system with MRU replacement policy.
+    MRUCache implements a caching system with MRU replacement policy.
     """
 
     def __init__(self):
@@ -25,16 +25,17 @@ class MRUCache(BaseCaching):
         """
         if key is not None and item is not None:
             if key in self.cache_data:
-                self.cache_data[key] = item
+                # Remove key from the current position because it will be updated
                 self.order.remove(key)
-                self.order.append(key)
-            else:
-                self.cache_data[key] = item
-                self.order.append(key)
-            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+            elif len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                # Remove the most recently used item
                 mru_key = self.order.pop()
                 del self.cache_data[mru_key]
                 print(f"DISCARD: {mru_key}")
+
+            # Add/Update the key at the end of the order list
+            self.cache_data[key] = item
+            self.order.append(key)
 
     def get(self, key):
         """
@@ -43,6 +44,7 @@ class MRUCache(BaseCaching):
         """
         if key is None or key not in self.cache_data:
             return None
+        # Move the accessed key to the end to mark it as most recently used
         self.order.remove(key)
         self.order.append(key)
         return self.cache_data.get(key)
