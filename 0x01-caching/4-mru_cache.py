@@ -25,7 +25,7 @@ class MRUCache(BaseCaching):
         """
         if key is not None and item is not None:
             if key in self.cache_data:
-                # Remove key from the current position because it will be updated
+                # Remove key from current position-> it will be updated
                 self.order.remove(key)
             elif len(self.cache_data) >= BaseCaching.MAX_ITEMS:
                 # Remove the most recently used item
