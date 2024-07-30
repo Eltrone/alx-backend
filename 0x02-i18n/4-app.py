@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+"""
+Initialisation application Flask avec Babel pourlocalisation des textes.
+"""
+
 from flask import Flask, render_template, request
 from flask_babel import Babel
 from typing import Optional
