@@ -14,6 +14,9 @@ from flask_babel import Babel, _
 app = Flask(__name__)
 babel = Babel(app)
 
+app.config['LANGUAGES'] = ['en', 'fr']
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
