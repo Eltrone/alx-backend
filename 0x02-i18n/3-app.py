@@ -3,7 +3,7 @@
 Initialisation application Flask avec Babel pourlocalisation des textes.
 """
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_babel import Babel, _
 from typing import Optional
 
