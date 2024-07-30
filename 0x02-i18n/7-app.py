@@ -24,42 +24,31 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
+
 def get_user():
     user_id = request.args.get('login_as')
     if user_id:
         return users.get(int(user_id))
     return None
 
+
 @app.before_request
 def before_request():
     g.user = get_user()
 
+
 @babel.localeselector
 def get_locale():
-    # Attempt to get the locale from URL parameters
     locale = request.args.get('locale')
     if locale and locale in ['en', 'fr']:
         return locale
-
-    # Attempt to get the locale from user settings
     if g.user and g.user['locale'] in ['en', 'fr']:
         return g.user['locale']
-
-    # Default to BABEL_DEFAULT_LOCALE
     return app.config['BABEL_DEFAULT_LOCALE']
 
-app.jinja_env.globals['get_locale'] = get_locale
-
-@app.route('/')
-def index():
-    return render_template('7-index.html')
-
-if __name__ == "__main__":
-    app.run(debug=True)
 
 @babel.timezoneselector
 def get_timezone():
-    # Attempt to get timezone from URL parameters
     tz_name = request.args.get('timezone')
     if tz_name:
         try:
@@ -67,21 +56,24 @@ def get_timezone():
             return tz_name
         except UnknownTimeZoneError:
             pass
-
-    # Attempt to get timezone from user settings
     if g.user and g.user['timezone']:
         try:
             pytz.timezone(g.user['timezone'])
             return g.user['timezone']
         except UnknownTimeZoneError:
             pass
-
-    # Default to UTC
     return 'UTC'
+
+
+# Adding functions to Jinja global environment
+app.jinja_env.globals['get_locale'] = get_locale
+app.jinja_env.globals['get_timezone'] = get_timezone
+
 
 @app.route('/')
 def index():
     return render_template('7-index.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
