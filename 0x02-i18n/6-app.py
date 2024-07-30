@@ -38,16 +38,16 @@ def before_request():
 
 @babel.localeselector
 def get_locale():
-    # Check URL parameters first
+    # 1. Locale from URL parameters
     locale = request.args.get('locale')
     if locale and locale in app.config['LANGUAGES']:
         return locale
 
-    # Then check user settings
+    # 2. Locale from user settings
     if g.user and g.user['locale'] in app.config['LANGUAGES']:
         return g.user['locale']
 
-    # Then use request header
+    # 3. Locale from request header
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
