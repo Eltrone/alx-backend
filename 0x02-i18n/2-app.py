@@ -5,7 +5,7 @@ la sélection de langue basée sur la requête de l'utilisateur.
 """
 
 from flask import Flask, render_template, request
-from flask_babel import Babel, localeselector
+from flask_babel import Babel
 from typing import Optional
 
 app = Flask(__name__)
